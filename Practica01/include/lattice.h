@@ -7,35 +7,34 @@
  *
  * @author Dario Fajardo alu0101564630@ull.edu.es
  * @date 9 Feb 2024
- * @brief En este archivo se define la clase Lattice. Que define el comportamiento del retículo en un autómata celular.
+ * @brief En este archivo se define la clase Lattice. Que imlementa el comportamiento del retículo en un autómata celular.
  */
 #ifndef LATTICE_H
 #define LATTICE_H
 
 #include <iostream>
-#include "cell.h"
+#include <cmath>
+#include "types.h"
 
-enum class Frontier : int {
-  periodic = 0,
-  fixed_hot = 1,
-  fixed_cold = 2
-};
+class Cell;
 
 class Lattice {
  public:
   // Constructores y destructor
-  Lattice();
+  Lattice() : size_(0), frontier_type_(Frontier::periodic) {};
   Lattice(const int& size, const Frontier& frontier_type);
-  ~Lattice() { delete[] cells_; }
+  ~Lattice();
   // Getters
-  const inline Cell GetCell(const Position& position) const { return cells_[position]; }
-  const inline Frontier GetFrontierType() const { return frontier_type_; }
+  Cell GetCell(const Position& position) const;
+  Frontier GetFrontierType() const;
+  int GetSize() const;
   // Operadores
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
   // Métodos
   void NextGeneration();
  private:
   Cell *cells_;
+  int size_;
   Frontier frontier_type_;
 };
 

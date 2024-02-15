@@ -13,32 +13,28 @@
 #define CELL_H
 
 #include <iostream>
-#include "lattice.h"
+#include "types.h"
 
-typedef int Position;
-
-enum State : int {
-  zero = 0,
-  one = 1
-};
+class Lattice;
 
 class Cell {
  public:
   // Constructores y destructor
-  Cell();
+  Cell() : index_(0), state_(State::zero) {};
   Cell(const Position& position, const State& state) : index_(position), state_(state) {}
   // Getters
   inline State GetState() const { return state_; }
+  inline Position GetIndex() const { return index_; }
   // Setters
   inline void SetState(const State& state) { state_ = state; }
   // Operadores
   friend std::ostream& operator<<(std::ostream& os, const Cell& cell);
   // Métodos
   void NextState(const Lattice& lattice);
-  void UpdateState(const State& left, const State& center, const State& right);
+  void UpdateState();
  private:
-  State state_;
   Position index_;
+  State state_;
   State next_state_;
   void TransitionFunction_(const State& left, const State& right);
 };
