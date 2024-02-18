@@ -22,7 +22,7 @@ class Lattice {
  public:
   // Constructores y destructor
   Lattice() : size_(0), frontier_type_(Frontier::periodic) {};
-  Lattice(const int& size, const Frontier& frontier_type);
+  Lattice(const int& size, const Frontier& frontier_type, const std::string& initial_configuration);
   ~Lattice();
   // Getters
   Cell GetCell(const Position& position) const;

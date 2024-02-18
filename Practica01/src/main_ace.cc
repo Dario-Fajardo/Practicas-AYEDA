@@ -10,14 +10,39 @@
  * @brief Arrchivo main del programa que simula un autómata celular elemental.
  */
 #include "../include/lattice.h"
-#include "../include/cell.h" 
+#include "../include/cell.h"
+#include "../include/tools.h"
 #include <ncurses.h>
 
 int main(int argc, char* argv[]) {
-  Lattice lattice(200, Frontier::periodic);
-  std::cout << lattice << std::endl;
-  for (int i = 0; i < 400; ++i) {
-    lattice.NextGeneration();
-    std::cout << lattice << std::endl;
+  int size;
+  Frontier frontier_type;
+  std::string input_file{""};
+  int error_code = CheckParameters(argc, argv, size, frontier_type, input_file);
+  if (error_code == 1) {
+    return 1;
+  }
+  std::cout << "Tamaño del retículo: " << size << std::endl;
+  std::cout << "Tipo de frontera: " << frontier_type << std::endl;
+  std::cout << "Archivo de entrada: " << input_file << std::endl;
+  std::string initial_configuration;
+  if (input_file != "") {
+    initial_configuration = ExtractInitialConfiguration(input_file);
+  }
+  Lattice lattice(size, frontier_type, initial_configuration);
+  bool running = true;
+  while (running) {
+    for (int i = 0; i < 20; ++i) {
+      std::cout << lattice << std::endl;
+      lattice.NextGeneration();
+    }
+    char answer;
+    do {
+      std::cout << "¿Desea continuar? (s/n): ";
+      std::cin >> answer;
+      if (answer == 'n') {
+        running = false;
+      }
+    } while (answer != 's' && answer != 'n');
   }
 }

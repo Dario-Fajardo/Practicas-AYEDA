@@ -12,16 +12,32 @@
 #include "../include/lattice.h"
 #include "../include/cell.h"
 
-Lattice::Lattice(const int& size, const Frontier& frontier_type) {
+Lattice::Lattice(const int& size, const Frontier& frontier_type, const std::string& initial_configuration) {
   size_ = size;
   frontier_type_ = frontier_type;
   cells_ = new Cell[size];
-  for (int i = 0; i < size; i++) {
-    if (i == floor(size / 2)) {
-      cells_[i] = Cell(i, State::one);
-    } else {
-      cells_[i] = Cell(i, State::zero);
+  if (initial_configuration == "") {
+    for (int i = 0; i < size; i++) {
+      if (i == floor(size / 2)) {
+        cells_[i] = Cell(i, State::one);
+      } else {
+        cells_[i] = Cell(i, State::zero);
+      }
     }
+  } else if (initial_configuration.length() == size) {
+    for (int i = 0; i < size; i++) {
+      if (initial_configuration[i] == '1') {
+        cells_[i] = Cell(i, State::one);
+      } else if (initial_configuration[i] == '0') {
+        cells_[i] = Cell(i, State::zero);
+      } else {
+        std::cerr << "[ERROR]: La configuración inicial debe ser una cadena de 1s y 0s de longitud igual al tamaño del retículo." << std::endl;
+        exit(1);
+      }
+    }
+  } else {
+    std::cerr << "[ERROR]: La configuración inicial debe ser una cadena de 1s y 0s de longitud igual al tamaño del retículo." << std::endl;
+    exit(1);
   }
 }
 
