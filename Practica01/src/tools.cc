@@ -11,7 +11,18 @@
  */
 #include "../include/tools.h"
 
-int CheckParameters(const int argc, char *argv[], int& size, Frontier& frontier_type, std::string& input_file) {
+/**
+ * @brief Comprueba que los parámetros pasados al programa sean correctos.
+ * 
+ * @param argc Número de argumentos pasados al programa.
+ * @param argv Array de argumentos pasados al programa.
+ * @param size Tamaño del retículo que se obtendrá de los argumentos.
+ * @param frontier_type Tipo de frontera que se obtendrá de los argumentos.
+ * @param input_file Archivo de entrada que se podrá obtener opcionalmente de los argumentos.
+ * 
+ * @return 0 si los parámetros son correctos, 1 si no lo son para propagar el error.
+ */
+int CheckParameters(const int argc, char *argv[], long unsigned int& size, Frontier& frontier_type, std::string& input_file) {
   bool size_flag{false};
   bool frontier_flag{false};
   if (argc < 4 || argc > 8) {
@@ -84,6 +95,11 @@ int CheckParameters(const int argc, char *argv[], int& size, Frontier& frontier_
   return 0;
 }
 
+/**
+ * @brief Muestra el uso del programa o la ayuda.
+ * 
+ * @param mode Modo en el que se ejecuta la función. False para errores y parámetros mal pasados, true para ayuda.
+ */
 void Usage(const bool mode) {
   if (!mode) { // Errores y parámetros mal pasados
     std::cerr << "Uso: ./practica01 --size | -s <size> --frontier | -f <periodic|open <0|1>> [--init | -i <input_file>]" << std::endl;
@@ -93,6 +109,13 @@ void Usage(const bool mode) {
   }
 }
 
+/**
+ * @brief Comprueba si una cadena de caracteres es un número.
+ * 
+ * @param str Cadena de caracteres a comprobar.
+ * 
+ * @return true si la cadena es un número, false si no lo es.
+ */
 bool IsDigit(const std::string& str) {
   for (char character : str) {
     if (!isdigit(character)) {
@@ -102,6 +125,13 @@ bool IsDigit(const std::string& str) {
   return true;
 }
 
+/**
+ * @brief Extrae la configuración inicial del archivo de entrada.
+ * 
+ * @param input_file Archivo de entrada.
+ * 
+ * @return Configuración inicial.
+ */
 std::string ExtractInitialConfiguration(const std::string& input_file) {
   std::ifstream file(input_file);
   std::string initial_configuration;
