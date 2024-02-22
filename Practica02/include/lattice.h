@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <vector>
 #include "types.h"
 
 class Cell;
@@ -21,8 +22,9 @@ class Cell;
 class Lattice {
  public:
   // Constructores y destructor
-  Lattice() : size_(0), frontier_type_(Frontier::periodic) {};
-  Lattice(const long unsigned int& size, const Frontier& frontier_type, const std::string& initial_configuration);
+  Lattice() : rows_(0), columns_(0), frontier_type_(Frontier::periodic) {};
+  Lattice(int rows, int columns, Frontier frontier_type);
+  Lattice(const char* filename);
   ~Lattice();
   // Getters
   Cell GetCell(const Position& position) const;
@@ -30,11 +32,14 @@ class Lattice {
   int GetSize() const;
   // Operadores
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
+  Cell& operator[](const Position& position) const;
   // Métodos
   void NextGeneration();
+  size_t Population() const;
  private:
-  Cell *cells_;
-  int size_;
+  std::vector<std::vector<Cell>> cells_;
+  int rows_;
+  int columns_;
   Frontier frontier_type_;
 };
 

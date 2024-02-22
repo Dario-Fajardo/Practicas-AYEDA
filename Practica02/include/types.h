@@ -1,7 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 
-typedef int Position;
+#include <utility>
+
+typedef std::pair<int, int> Position;
 
 enum State : int {
   zero = 0,
@@ -13,5 +15,17 @@ enum Frontier : int {
   fixed_hot = 1,
   fixed_cold = 2
 };
+
+struct Neighbourhood {
+  Cell* up_left;
+  Cell* up;
+  Cell* up_right;
+  Cell* left;
+  Cell* right;
+  Cell* down_left;
+  Cell* down;
+  Cell* down_right;
+};
+
 
 #endif

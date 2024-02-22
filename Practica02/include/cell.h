@@ -20,7 +20,7 @@ class Lattice;
 class Cell {
  public:
   // Constructores y destructor
-  Cell() : index_(0), state_(State::zero) {};
+  Cell() : index_(0, 0), state_(State::zero) {};
   Cell(const Position& position, const State& state) : index_(position), state_(state) {}
   // Getters
   inline State GetState() const { return state_; }
@@ -36,7 +36,7 @@ class Cell {
   Position index_;
   State state_;
   State next_state_;
-  void TransitionFunction_(const State& left, const State& right);
+  void TransitionFunction_(const Neighbourhood& neighbourhood);
 };
 
 #endif
