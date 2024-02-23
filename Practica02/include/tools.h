@@ -15,11 +15,12 @@
 #include <iostream>
 #include <ctype.h>
 #include <fstream>
+#include <vector>
+#include <algorithm>
 #include "types.h"
 
-int CheckParameters(const int argc, char *argv[], long unsigned int& size, Frontier& frontier_type, std::string& input_file);
+int CheckParameters(const int argc, char *argv[], Position& size, Frontier& frontier_type, char*& input_file);
 void Usage(const bool mode);
 bool IsDigit(const std::string& str);
-std::string ExtractInitialConfiguration(const std::string& input_file);
 
 #endif

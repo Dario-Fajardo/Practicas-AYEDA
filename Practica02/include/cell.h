@@ -13,6 +13,7 @@
 #define CELL_H
 
 #include <iostream>
+#include <tuple>
 #include "types.h"
 
 class Lattice;
@@ -20,23 +21,26 @@ class Lattice;
 class Cell {
  public:
   // Constructores y destructor
-  Cell() : index_(0, 0), state_(State::zero) {};
+  Cell() : index_(0, 0), state_(State::dead) {};
   Cell(const Position& position, const State& state) : index_(position), state_(state) {}
+  Cell(const State& state) : state_(state) {}
   // Getters
   inline State GetState() const { return state_; }
   inline Position GetIndex() const { return index_; }
   // Setters
   inline void SetState(const State& state) { state_ = state; }
+  inline void SetIndex(const Position& index) { index_ = index; }
   // Operadores
   friend std::ostream& operator<<(std::ostream& os, const Cell& cell);
   // Métodos
-  void NextState(const Lattice& lattice);
+  void NextState(Lattice& lattice);
   void UpdateState();
  private:
   Position index_;
   State state_;
   State next_state_;
   void TransitionFunction_(const Neighbourhood& neighbourhood);
+  int CheckNeibourhood_(const Neighbourhood& neighbourhood);
 };
 
 #endif
