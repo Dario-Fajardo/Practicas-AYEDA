@@ -16,6 +16,13 @@
 #include "../include/tools.h"
 #include <iostream>
 
+
+/**
+ * @brief Función principal del programa.
+ * @param argc Número de argumentos.
+ * @param argv Argumentos.
+ * @return int Código de error.
+*/
 int main(int argc, char* argv[]) {
   Position size{0, 0};
   Frontier frontier_type;

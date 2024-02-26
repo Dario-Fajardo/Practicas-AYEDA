@@ -29,14 +29,24 @@ std::ostream& operator<<(std::ostream& os, const Cell& cell) {
   return os;
 }
 
+/**
+ * @brief Método que llama al proceso de calculo de la siguiente generación.
+ */
 void Cell::NextState(Lattice& lattice) {
   TransitionFunction_(lattice.GetNeighbourhood(index_));
 }
 
+/**
+ * @brief Método que actualiza el estado de la célula.
+ */
 void Cell::UpdateState() {
   state_ = next_state_;
 }
 
+/**
+ * @brief Método que calcula el siguiente estado de la célula.
+ * @param neighbourhood Vecindario de la célula.
+ */
 void Cell::TransitionFunction_(const Neighbourhood& neighbourhood) {
   int alive = CheckNeibourhood_(neighbourhood);
   if (state_ == State::alive) {
@@ -54,6 +64,11 @@ void Cell::TransitionFunction_(const Neighbourhood& neighbourhood) {
   }
 }
 
+/**
+ * @brief Método que comprueba el número de células vivas en el vecindario.
+ * @param neighbourhood Vecindario de la célula.
+ * @return int Número de células vivas en el vecindario.
+ */
 int Cell::CheckNeibourhood_(const Neighbourhood& neighbourhood) {
   int alive = 0;
   if (std::get<0>(neighbourhood).GetState() == State::alive) {

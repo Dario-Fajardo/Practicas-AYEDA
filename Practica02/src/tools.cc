@@ -11,6 +11,15 @@
  */
 #include "../include/tools.h"
 
+/**
+ * @brief Comprueba que los parámetros de entrada sean correctos.
+ * @param argc Número de argumentos.
+ * @param argv Argumentos.
+ * @param size Tamaño del tablero.
+ * @param frontier_type Tipo de frontera.
+ * @param input_file Archivo de entrada.
+ * @return int 0 si los parámetros son correctos, 1 si no lo son.
+ */
 int CheckParameters(const int argc, char *argv[], Position& size, Frontier& frontier_type, char*& input_file) {
   std::vector<std::string> arguments;
   for (int i{1}; i < argc; ++i) {
@@ -91,6 +100,10 @@ int CheckParameters(const int argc, char *argv[], Position& size, Frontier& fron
   return 0;
 }
 
+/**
+ * @brief Muestra el mensaje de ayuda.
+ * @param mode Modo de ayuda. 
+ */
 void Usage(const bool mode) {
   if (mode == true) {
     std::cout << "Uso: ./life_game [--size <M> <N> | --init <arcihvo>] --border <border>\n";
@@ -105,6 +118,11 @@ void Usage(const bool mode) {
   }
 }
 
+/**
+ * @brief Comprueba si una cadena de caracteres es un número.
+ * @param str Cadena de caracteres.
+ * @return bool True si es un número, false si no lo es.
+ */
 bool IsDigit(const std::string& str) {
   return std::all_of(str.begin(), str.end(), ::isdigit);
 }

@@ -12,6 +12,13 @@
 #include "../include/lattice.h"
 #include "../include/cell.h"
 
+/**
+ * @brief Método que llama al constructor adecuado de la clase Lattice
+ * @param rows Número de filas.
+ * @param columns Número de columnas.
+ * @param frontier_type Tipo de frontera.
+ * @return Lattice Objeto de la clase Lattice.
+ */
 Lattice Lattice::CreateLattice(const Position& size, Frontier frontier_type, const char* input_file) {
   if (input_file == "none") {
     return Lattice(size.first, size.second, frontier_type);
@@ -19,6 +26,12 @@ Lattice Lattice::CreateLattice(const Position& size, Frontier frontier_type, con
   return Lattice(input_file, frontier_type);
 }
 
+/**
+  * @brief Constructor de la clase Lattice.
+  * @param rows Número de filas.
+  * @param columns Número de columnas.
+  * @param frontier_type Tipo de frontera.
+  */
 Lattice::Lattice(int rows, int columns, Frontier frontier_type) {
   rows_ = rows;
   columns_ = columns;
@@ -36,6 +49,11 @@ Lattice::Lattice(int rows, int columns, Frontier frontier_type) {
   SetCells_();
 }
 
+/**
+ * @brief Constructor de la clase Lattice.
+ * @param filename Nombre del archivo.
+ * @param frontier_type Tipo de frontera.
+ */
 Lattice::Lattice(const char* filename, Frontier frontier_type) {
   frontier_type_ = frontier_type;
   std::ifstream file(filename, std::ios_base::in);
@@ -61,6 +79,11 @@ Lattice::Lattice(const char* filename, Frontier frontier_type) {
   }
 }
 
+/**
+ * @brief Método que devuelve la celda en la posición indicada.
+ * @param position Posición de la celda.
+ * @return Cell& Referencia a la celda. 
+ */
 Cell& Lattice::GetCell(const Position& position) {
   if (position.first < 0 || position.first >= rows_ || position.second < 0 || position.second >= columns_) {
     if (frontier_type_ == open_cold) {
@@ -107,6 +130,12 @@ Cell& Lattice::operator[](const Position& position) {
   return GetCell(position);
 }
 
+/**
+ * @brief Sobrecarga del operador de salida.
+ * @param os Flujo de salida.
+ * @param lattice Objeto de la clase Lattice.
+ * @return std::ostream& Referencia al flujo de salida.
+ */
 std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   std::cout << "Población: " << lattice.Population() << '\n';
   std::cout << "Tamaño: " << lattice.rows_ << "x" << lattice.columns_ << '\n';
@@ -119,6 +148,11 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
   return os;
 }
 
+/**
+ * @brief Método que devuelve el vecindario de la celda en la posición indicada.
+ * @param position Posición de la celda.
+ * @return Neighbourhood Vecindario de la celda. 
+ */
 Neighbourhood Lattice::GetNeighbourhood(const Position& position) {
   int row = position.first;
   int column = position.second;
@@ -133,6 +167,9 @@ Neighbourhood Lattice::GetNeighbourhood(const Position& position) {
   return Neighbourhood(up_left, up, up_right, left, right, down_left, down, down_right);
 }
 
+/**
+ * @brief Método que avanza una generación en el retículo.
+ */
 void Lattice::NextGeneration() {
   if (frontier_type_ == no_frontier) {
     FrontierExpansion();
@@ -149,6 +186,10 @@ void Lattice::NextGeneration() {
   }
 }
 
+/**
+ * @brief Método que expande el retículo si el tipo de frontera es no finita.
+ * @details Si el retículo tiene células vivas en los bordes, se añaden filas o columnas al retículo.
+ */
 void Lattice::FrontierExpansion() {
   bool top{false}, bottom{false}, left{false}, right{false};
   for (int i{0}; i < rows_; ++i) {
@@ -190,6 +231,11 @@ void Lattice::FrontierExpansion() {
   Resize_(rows_, columns_);
 }
 
+/**
+ * @brief Método que redimensiona el retículo. Usado para expandir en caso de frontera no finita.
+ * @param rows Número de filas.
+ * @param columns Número de columnas.
+ */
 void Lattice::Resize_(int rows, int columns) {
   rows_ = rows;
   columns_ = columns;
@@ -202,6 +248,10 @@ void Lattice::Resize_(int rows, int columns) {
   }
 }
 
+/**
+ * @brief Método que devuelve el número de células vivas en el retículo.
+ * @return int Número de células vivas.
+ */
 size_t Lattice::Population() const {
   size_t population = 0;
   for (int i{0}; i < rows_; ++i) {
@@ -214,6 +264,9 @@ size_t Lattice::Population() const {
   return population;
 }
 
+/**
+ * @brief Método que cambia el estado de las células del retículo a orden del usuario.
+ */
 void Lattice::SetCells_() {
   char answer;
   do {
