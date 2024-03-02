@@ -9,7 +9,7 @@
  * @date 23 Feb 2024
  * @brief En este archivo se declaran utilidades que se usarán en el resto del programa.
  */
-#include "../include/tools.h"
+#include "tools.h"
 
 /**
  * @brief Comprueba que los parámetros de entrada sean correctos.

@@ -9,8 +9,8 @@
  * @date 23 Feb 2024
  * @brief En este archivo se declara la clase Célula. Que define el comportamiento de una célula en un autómata celular.
  */
-#include "../include/cell.h"
-#include "../include/lattice.h"
+#include "cell.h"
+#include "../lattice/lattice.h"
 
 /**
  * @brief Sobrecarga del operador << para la clase Cell

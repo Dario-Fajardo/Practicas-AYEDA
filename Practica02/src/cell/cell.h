@@ -14,7 +14,7 @@
 
 #include <iostream>
 #include <tuple>
-#include "types.h"
+#include "../types/types.h"
 
 class Lattice;
 

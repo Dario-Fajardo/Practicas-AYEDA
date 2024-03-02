@@ -9,8 +9,8 @@
  * @date 23 Feb 2024
  * @brief En este archivo se define la clase Lattice. Que imlementa el comportamiento del retículo en un autómata celular.
  */
-#include "../include/lattice.h"
-#include "../include/cell.h"
+#include "lattice.h"
+#include "../cell/cell.h"
 
 /**
  * @brief Método que llama al constructor adecuado de la clase Lattice
@@ -111,12 +111,12 @@ Cell& Lattice::GetCell(const Position& position) {
       if (row < 0) {
         row = abs(row);
       } else if (row >= rows_) {
-        row = rows_ - (row - rows_);
+        row = rows_ - (row - rows_) - 1;
       }
       if (column < 0) {
         column = abs(column);
       } else if (column >= columns_) {
-        column = columns_ - (column - columns_);
+        column = columns_ - (column - columns_) - 1;
       }
       return cells_[row][column];
     } else if (frontier_type_ == no_frontier) {
@@ -156,14 +156,14 @@ std::ostream& operator<<(std::ostream& os, const Lattice& lattice) {
 Neighbourhood Lattice::GetNeighbourhood(const Position& position) {
   int row = position.first;
   int column = position.second;
-  Cell up_left = GetCell(Position(row - 1, column - 1));
+  Cell up_left = GetCell(Position(row - 2, column - 2));
   Cell up = GetCell(Position(row - 1, column));
-  Cell up_right = GetCell(Position(row - 1, column + 1));
+  Cell up_right = GetCell(Position(row - 2, column + 2));
   Cell left = GetCell(Position(row, column - 1));
   Cell right = GetCell(Position(row, column + 1));
-  Cell down_left = GetCell(Position(row + 1, column - 1));
+  Cell down_left = GetCell(Position(row + 2, column - 2));
   Cell down = GetCell(Position(row + 1, column));
-  Cell down_right = GetCell(Position(row + 1, column + 1));
+  Cell down_right = GetCell(Position(row + 2, column + 2));
   return Neighbourhood(up_left, up, up_right, left, right, down_left, down, down_right);
 }
 

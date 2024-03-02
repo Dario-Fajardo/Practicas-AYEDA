@@ -17,7 +17,7 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include "types.h"
+#include "../types/types.h"
 
 int CheckParameters(const int argc, char *argv[], Position& size, Frontier& frontier_type, char*& input_file);
 void Usage(const bool mode);
