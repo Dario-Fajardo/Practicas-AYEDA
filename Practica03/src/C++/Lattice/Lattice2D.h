@@ -18,20 +18,21 @@
 class Lattice2D : public Lattice {
  public:
   // Constructores y destructor
-  Lattice2D(const size_t size, const FactoryCell& factory, const int& rows, const int& columns);
+  Lattice2D(const size_t size, const FactoryCell& factory, const size_t& rows, const size_t& columns);
   Lattice2D(const char* filename, const FactoryCell& factory);
-  virtual ~Lattice2D() = default;
   // Getters
   virtual Cell& GetCell(const Position& position) const = 0;
   Neighbourhood GetNeighbours(const Position& position, const int& mode) const override;
   // Operadores
   virtual Cell& operator[](const Position& position) const = 0;
   // Otros métodos
-  void NextGeneration() override;
+  virtual void NextGeneration() = 0;
   size_t Population() const override;
   std::ostream& Display(std::ostream& os) const override;
  protected:
-  std::vector<std::vector<Cell*>> bidimensional_lattice_;
+  size_t rows_;
+  size_t columns_;
+  std::vector<std::vector<Cell*>> lattice_;
 };
 
 #endif  // LATTICE2D_H

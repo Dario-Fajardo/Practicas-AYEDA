@@ -14,16 +14,26 @@
 #include "Cell/CellACE30.h"
 #include "Cell/CellLife23_3.h"
 #include "Cell/CellLife51_346.h"
-#include "Lattice/Lattice1D_periodic.h"
 #include "FactoryCell/FactoryCellACE110.h"
+#include "FactoryCell/FactoryCellACE30.h"
+#include "FactoryCell/FactoryCellLife23_3.h"
+#include "FactoryCell/FactoryCellLife51_346.h"
+#include "Lattice/Lattice1D_periodic.h"
+#include "Lattice/Lattice1D_open.h"
+#include "Lattice/Lattice2D_reflective.h"
+#include "Lattice/Lattice2D_noborder.h"
 #include <iostream>
+#include <vector>
 
 int main(int argc, char* argv[]) {
-  FactoryCellACE100 factory;
-  Lattice1DPeriodic lattice(10, factory);
-  for (int i = 0; i < 10; i++) {
+  FactoryCellLife23_3 factory;
+  Lattice2DNoBorder lattice{"confs/Espiral.conf", factory};
+  system("clear");
+  for (size_t i = 0; i < 200; i++) {
     std::cout << lattice << std::endl;
+    lattice.FrontierExpansion();
     lattice.NextGeneration();
+    system("sleep 0.02");
+    system("clear");
   }
-  return 0;
 }

@@ -12,16 +12,35 @@
  */
 #include "Lattice2D_reflective.h"
 
-/**
- * @brief Destructor de la clase Lattice2DReflective
- */
-Lattice2DReflective::~Lattice2DReflective() {
+Lattice2DReflective::Lattice2DReflective(const size_t size, const FactoryCell& factory, const size_t& rows, const size_t& columns) : Lattice2D(size, factory, rows, columns) {
+    char answer{'s'};
+  do {
+    std::cout << "Quieres poner alguna célula en estado viva? (s/n)" << std::endl;
+    do {
+      std::cin >> answer;
+    } while (answer != 's' && answer != 'n');
+    if (answer == 's') {
+      size_t row, column;
+      do {
+        std::cout << "Introduce la posición de la célula que quieres poner en estado viva: ";
+        std::cin >> row >> column;
+      } while (row < 0 || row >= rows_ || column < 0 || column >= columns_);
+      lattice_[row][column]->SetState(State::Alive);
+    }
+  } while(answer == 's'); 
+}
+
+void Lattice2DReflective::NextGeneration() {
   for (size_t i = 0; i < rows_; i++) {
     for (size_t j = 0; j < columns_; j++) {
-      delete bidimensional_lattice_[i][j];
+      lattice_[i][j]->NextState(*this);
     }
   }
-  bidimensional_lattice_.~vector();
+  for (size_t i = 0; i < rows_; i++) {
+    for (size_t j = 0; j < columns_; j++) {
+      lattice_[i][j]->UpdateState();
+    }
+  }
 }
 
 /**
@@ -30,19 +49,21 @@ Lattice2DReflective::~Lattice2DReflective() {
  * @return Célula en la posición dada
  */
 Cell& Lattice2DReflective::GetCell(const Position& position) const {
-  size_t row = position[0];
-  size_t column = position[1];
+  int row = position[0];
+  int column = position[1];
+  int rows = rows_;
+  int columns = columns_;
   if (row < 0) {
     row = abs(row);
-  } else if (row >= rows_) {
-    row = (rows_ - 1) - (row % rows_ - 1);
+  } else if (row >= rows) {
+    row = rows - (row - rows) - 1;
   }
   if (column < 0) {
     column = abs(column);
-  } else if (column >= columns_) {
-    column = (columns_ - 1) - (column % columns_ - 1);
+  } else if (column >= columns) {
+    column = columns - (column - columns) - 1;
   }
-  return *bidimensional_lattice_[row][column];
+  return *lattice_[row][column];
 }
 
 /**

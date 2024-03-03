@@ -14,7 +14,6 @@
 #define POSITIONDIM_H
 
 #include "Position.h"
-#include <stdarg.h>
 
 template <int Dim=2>
 class PositionDim : public Position {
@@ -27,7 +26,17 @@ class PositionDim : public Position {
     }
     va_end(args);
   }
-  coor_t operator[](unsigned int index) const override { return coordinate_[index]; }
+  coor_t operator[](unsigned int index) const override {
+    try {
+      if (index >= Dim || index < 0) {
+        throw ac_exception("Índice fuera de rango");
+      } 
+      return coordinate_[index];
+    } catch (ac_exception& e) {
+      std::cerr << e.what() << std::endl;
+      exit(1);
+    }
+  }
  private:
   coor_t coordinate_[Dim];
 };

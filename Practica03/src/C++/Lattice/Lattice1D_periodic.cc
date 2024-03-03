@@ -22,6 +22,24 @@
 //   Lattice1D::~Lattice1D();
 // }
 
+Lattice1DPeriodic::Lattice1DPeriodic(const size_t size, const FactoryCell& factory) : Lattice1D(size, factory) {
+  char answer{'s'};
+  do {
+    std::cout << "Quieres poner alguna célula en estado viva? (s/n)" << std::endl;
+    do {
+      std::cin >> answer;
+    } while (answer != 's' && answer != 'n');
+    if (answer == 's') {
+      size_t position;
+      do {
+        std::cout << "Introduce la posición de la célula que quieres poner en estado viva: ";
+        std::cin >> position;
+      } while (position < 0 || position >= size);
+      lattice_[position]->SetState(State::Alive);
+    }
+  } while(answer == 's'); 
+}
+
 /**
  * @brief Método que devuelve la célula en la posición dada
  * @param position posición de la célula
@@ -29,10 +47,10 @@
  * @return Célula en la posición dada 
  */
 Cell& Lattice1DPeriodic::GetCell(const Position& position) const {
-  if (position[0] < 0 || static_cast<size_t>(position[0]) >= unidimensional_lattice_.size()) {
-    return *unidimensional_lattice_[position[0] % unidimensional_lattice_.size()];
+  if (position[0] < 0 || static_cast<size_t>(position[0]) >= lattice_.size()) {
+    return *lattice_[position[0] % lattice_.size()];
   }
-  return *unidimensional_lattice_[position[0]];
+  return *lattice_[position[0]];
 }
 
 /**

@@ -19,7 +19,7 @@ class CellACE110 : public CellACE {
  public:
   // Constructores
   CellACE110() = default;
-  CellACE110(const Position& position, const State& state) : CellACE(position, state) {};
+  CellACE110(const Position& position, const State& state) : CellACE(position, state) { position_ = const_cast<Position&>(position); }
   // Otros métodos
   void TransitionFunction_(const State& left, const State& right) override;
 };

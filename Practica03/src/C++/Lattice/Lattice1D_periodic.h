@@ -18,19 +18,8 @@
 class Lattice1DPeriodic : public Lattice1D {
  public:
   // Constructores y destructor
-  Lattice1DPeriodic(const size_t size, const FactoryCell& factory) : Lattice1D(size, factory) {
-    std::cout << "Quieres cambiar el tamaño del retículo? (s/n)" << std::endl;
-    char answer;
-    std::cin >> answer;
-    if (answer == 's') {
-      std::cout << "Introduce la posición de la célula que quieres cambiar" << std::endl;
-      size_t position;
-      std::cin >> position;
-      unidimensional_lattice_[position]->SetState(State::Alive);
-    }
-  };
+  Lattice1DPeriodic(const size_t size, const FactoryCell& factory);
   Lattice1DPeriodic(const char* filename, const FactoryCell& factory) : Lattice1D(filename, factory) {};
-  // ~Lattice1DPeriodic();
   // Getters
   Cell& GetCell(const Position& position) const override;
   // Operadores

@@ -12,14 +12,22 @@
  */
 #include "Lattice1D_open.h"
 
-/**
- * @brief Constructor de la clase Lattice1DOpen 
- */
-Lattice1DOpen::~Lattice1DOpen() {
-  for (size_t i = 0; i < unidimensional_lattice_.size(); i++) {
-    delete unidimensional_lattice_[i];
-  }
-  unidimensional_lattice_.~vector();
+Lattice1DOpen::Lattice1DOpen(const size_t size, const FactoryCell& factory, OpenType open_type) : Lattice1D(size, factory), open_type_(open_type) {
+  char answer{'s'};
+  do {
+    std::cout << "Quieres poner alguna célula en estado viva? (s/n)" << std::endl;
+    do {
+      std::cin >> answer;
+    } while (answer != 's' && answer != 'n');
+    if (answer == 's') {
+      size_t position;
+      do {
+        std::cout << "Introduce la posición de la célula que quieres poner en estado viva: ";
+        std::cin >> position;
+      } while (position < 0 || position >= size);
+      lattice_[position]->SetState(State::Alive);
+    }
+  } while(answer == 's'); 
 }
 
 /**
@@ -29,11 +37,12 @@ Lattice1DOpen::~Lattice1DOpen() {
  * @return Célula en la posición dada 
  */
 Cell& Lattice1DOpen::GetCell(const Position& position) const {
-  if (position[0] < 0 || static_cast<size_t>(position[0]) >= unidimensional_lattice_.size()) {
+  if (position[0] < 0 || static_cast<size_t>(position[0]) >= lattice_.size()) {
     State state = open_type_ == OpenType::Cold ? State::Dead : State::Alive;
-    return *factory_.CreateCell(position, state);
+    Position* position_cell = new PositionDim<1>(1, position[0]);
+    return *factory_.CreateCell(*position_cell, state);
   }
-  return *unidimensional_lattice_[position[0]];
+  return *lattice_[position[0]];
 }
 
 /**

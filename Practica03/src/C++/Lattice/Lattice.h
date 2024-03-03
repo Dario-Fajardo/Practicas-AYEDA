@@ -23,13 +23,12 @@ class Cell;
 
 class Lattice {
  public:
-  // Constructores y destructor
-  Lattice(const size_t size, const FactoryCell& factory, int dimensions, size_t rows = 0, size_t columns = 0);
-  Lattice(const char* filename, const FactoryCell& factory);
-  // virtual ~Lattice();
+  // Constructores
+  Lattice(const size_t size, const FactoryCell& factory) : size_(size), factory_(const_cast<FactoryCell&>(factory)) {};
   // Getters
   virtual Cell& GetCell(const Position& position) const = 0;
   virtual Neighbourhood GetNeighbours(const Position& position, const int& mode) const = 0;
+  std::pair<size_t, size_t> GetDimensions() const { return std::make_pair(size_, size_); }
   // Operadores
   virtual Cell& operator[](const Position& position) const = 0;
   friend std::ostream& operator<<(std::ostream& os, const Lattice& lattice);
@@ -39,10 +38,8 @@ class Lattice {
   virtual std::ostream& Display(std::ostream& os) const = 0;
  protected:
   size_t size_;
-  size_t rows_;
-  size_t columns_;
-  std::vector<Cell*> unidimensional_lattice_;
   FactoryCell& factory_;
 };
 
-#endif  // LATTICE_H
+
+#endif

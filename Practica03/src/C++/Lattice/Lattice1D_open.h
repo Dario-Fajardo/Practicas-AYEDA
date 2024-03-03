@@ -23,9 +23,8 @@ enum OpenType : int {
 class Lattice1DOpen : public Lattice1D {
  public:
   // Constructores y destructor
-  Lattice1DOpen(const size_t size, const FactoryCell& factory, OpenType open_type) : Lattice1D(size, factory), open_type_(open_type) {};
+  Lattice1DOpen(const size_t size, const FactoryCell& factory, OpenType open_type);
   Lattice1DOpen(const char* filename, const FactoryCell& factory, OpenType open_type): Lattice1D(filename, factory), open_type_(open_type) {};
-  ~Lattice1DOpen();
   // Getters
   Cell& GetCell(const Position& position) const override;
   // Operadores

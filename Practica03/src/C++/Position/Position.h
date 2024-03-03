@@ -12,11 +12,27 @@
 #ifndef POSITION_H
 #define POSITION_H
 
+#include <cstdarg>
+#include <exception>
+#include <string>
+#include <iostream>
+
 typedef int coor_t;
 
 class Position {
  public:
   virtual coor_t operator[](unsigned int index) const = 0;
+};
+
+class ac_exception : public std::exception {
+ public:
+  ac_exception(const std::string& message) : message_{message} {}
+  const char* what() const noexcept override {
+    return message_.c_str();
+  }
+
+ private:
+  std::string message_;
 };
 
 #endif  // POSITION_H

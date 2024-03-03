@@ -21,14 +21,13 @@ class Lattice;
 class Cell {
  public:
   // Constructores
-  Cell() = default;
-  Cell(const Position& position, const State& state) : position_{const_cast<Position&>(position)}, state_{state} {}
+  Cell(const Position& position, const State& state) : position_{const_cast<Position&>(position)}, state_{state} {};
   // Getters
   State GetState() const { return state_; }
   Position& GetPosition() const { return position_; }
   // Setters
   void SetState(const State& state) { state_ = state; }
-  void SetPosition(const Position& position) { position_ = const_cast<Position&>(position); }
+  void SetPosition(const Position& position) { position_ = position; }
   // Otros métodos
   virtual void NextState(const Lattice& lattice) = 0;
   virtual void UpdateState() = 0;

@@ -17,19 +17,20 @@
 
 class Lattice1D : public Lattice {
  public:
-  // Constructores y destructor
-  Lattice1D(const size_t size, const FactoryCell& factory) : Lattice(size, factory, 1) {};
-  Lattice1D(const char* filename, const FactoryCell& factory) : Lattice(filename, factory) {};
-  // virtual ~Lattice1D();
+  // Constructores
+  Lattice1D(const size_t& size, const FactoryCell& factory);
+  Lattice1D(const char* file_name, const FactoryCell& factory);
   // Getters
-  virtual Cell& GetCell(const Position& position) const = 0;
+  Cell& GetCell(const Position& position) const = 0;
   Neighbourhood GetNeighbours(const Position& position, const int& mode) const override;
   // Operadores
-  virtual Cell& operator[](const Position& position) const = 0;
+  Cell& operator[](const Position& position) const = 0;
   // Otros métodos
   void NextGeneration() override;
   size_t Population() const override;
   std::ostream& Display(std::ostream& os) const override;
+ protected:
+  std::vector<Cell*> lattice_;
 };
 
-#endif  // LATTICE1D_H
+#endif

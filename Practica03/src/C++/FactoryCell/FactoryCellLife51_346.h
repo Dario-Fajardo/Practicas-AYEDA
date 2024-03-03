@@ -15,7 +15,7 @@
 #include "FactoryCell.h"
 #include "../Cell/CellLife51_346.h"
 
-class FactoryCellACE51_346 : public FactoryCell {
+class FactoryCellLife51_346 : public FactoryCell {
  public:
   virtual Cell* CreateCell(const Position& position, const State& state) const override { return new CellLife51_346(position, state); }
 };
