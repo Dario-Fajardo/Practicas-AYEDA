@@ -21,6 +21,7 @@ typedef int coor_t;
 
 class Position {
  public:
+  virtual ~Position() = default;
   virtual coor_t operator[](unsigned int index) const = 0;
 };
 

@@ -27,6 +27,7 @@ class Lattice1DOpen : public Lattice1D {
   Lattice1DOpen(const char* filename, const FactoryCell& factory, OpenType open_type): Lattice1D(filename, factory), open_type_(open_type) {};
   // Getters
   Cell& GetCell(const Position& position) const override;
+  Cell& GetCell(const Position& position);
   // Operadores
   Cell& operator[](const Position& position) const override;
  private:

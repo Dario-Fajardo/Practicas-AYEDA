@@ -20,6 +20,7 @@ class Lattice1D : public Lattice {
   // Constructores
   Lattice1D(const size_t& size, const FactoryCell& factory);
   Lattice1D(const char* file_name, const FactoryCell& factory);
+  virtual ~Lattice1D() override {};
   // Getters
   Cell& GetCell(const Position& position) const = 0;
   Neighbourhood GetNeighbours(const Position& position, const int& mode) const override;

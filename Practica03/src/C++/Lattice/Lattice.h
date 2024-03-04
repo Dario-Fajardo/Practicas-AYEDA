@@ -25,6 +25,7 @@ class Lattice {
  public:
   // Constructores
   Lattice(const size_t size, const FactoryCell& factory) : size_(size), factory_(const_cast<FactoryCell&>(factory)) {};
+  virtual ~Lattice() {};
   // Getters
   virtual Cell& GetCell(const Position& position) const = 0;
   virtual Neighbourhood GetNeighbours(const Position& position, const int& mode) const = 0;

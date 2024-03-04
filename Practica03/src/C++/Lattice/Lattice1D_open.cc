@@ -46,6 +46,21 @@ Cell& Lattice1DOpen::GetCell(const Position& position) const {
 }
 
 /**
+ * @brief Método que devuelve la célula en la posición dada
+ * @param position posición de la célula
+ * 
+ * @return Célula en la posición dada 
+ */
+Cell& Lattice1DOpen::GetCell(const Position& position) {
+  if (position[0] < 0 || static_cast<size_t>(position[0]) >= lattice_.size()) {
+    State state = open_type_ == OpenType::Cold ? State::Dead : State::Alive;
+    Position* position_cell = new PositionDim<1>(1, position[0]);
+    return *factory_.CreateCell(*position_cell, state);
+  }
+  return *lattice_[position[0]];
+}
+
+/**
  * @brief Sobrecarga del operador [] para acceder a una célula en cierta posición del retículo
  * @param position posición de la célula 
  */

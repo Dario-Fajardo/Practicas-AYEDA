@@ -20,6 +20,7 @@ class Lattice2D : public Lattice {
   // Constructores y destructor
   Lattice2D(const size_t size, const FactoryCell& factory, const size_t& rows, const size_t& columns);
   Lattice2D(const char* filename, const FactoryCell& factory);
+  virtual ~Lattice2D() override {};
   // Getters
   virtual Cell& GetCell(const Position& position) const = 0;
   Neighbourhood GetNeighbours(const Position& position, const int& mode) const override;

@@ -12,16 +12,6 @@
  */
 #include "Lattice1D_periodic.h"
 
-// /**
-//  * @brief Destructor de la clase Lattice1DPeriodic 
-//  */
-// Lattice1DPeriodic::~Lattice1DPeriodic() {
-//   for (size_t i = 0; i < unidimensional_lattice_.size(); i++) {
-//     delete unidimensional_lattice_[i];
-//   }
-//   Lattice1D::~Lattice1D();
-// }
-
 Lattice1DPeriodic::Lattice1DPeriodic(const size_t size, const FactoryCell& factory) : Lattice1D(size, factory) {
   char answer{'s'};
   do {

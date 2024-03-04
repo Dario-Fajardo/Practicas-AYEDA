@@ -26,6 +26,7 @@ class PositionDim : public Position {
     }
     va_end(args);
   }
+  ~PositionDim() override = default;
   coor_t operator[](unsigned int index) const override {
     try {
       if (index >= Dim || index < 0) {

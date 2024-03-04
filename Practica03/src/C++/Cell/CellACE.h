@@ -18,9 +18,8 @@ class CellACE : public Cell {
  public:
   // Constructores
   CellACE() = default;
-  CellACE(const Position& position, const State& state) : Cell(position, state) {
-    position_ = const_cast<Position&>(position);
-  };
+  CellACE(const Position& position, const State& state) : Cell(position, state) { position_ = const_cast<Position&>(position); };
+  // Destructor
   // Otros métodos
   void NextState(const Lattice& lattice) override;
   void UpdateState() override { state_ = next_state_; };
