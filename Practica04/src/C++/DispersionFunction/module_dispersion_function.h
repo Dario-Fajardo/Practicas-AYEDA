@@ -10,13 +10,20 @@
  * @brief En este archivo se encuentra la declaración de la clase ModuleDispersionFunction, hija de la clase abstracta DispersionFunction
  *        utilizada para implementar este tipo de función de dispersion
  */
+#ifndef MODULE_DISPERSION_FUNCTION_H
+#define MODULE_DISPERSION_FUNCTION_H
+
 #include "dispersion_function.h"
 
 template<class Key>
-class ModuleDispersionFunction : public DispersionFunction {
+class ModuleDispersionFunction : public DispersionFunction<Key> {
  public:
-  ModuleDispersionFunction(unsigned table_size) : table_size_{table_size} {}
-  unsigned operator() (const Key&) override;
+  ModuleDispersionFunction(unsigned table_size) : table_size_(table_size) {};
+  unsigned operator() (const Key& key) const override { return key % table_size_; };
+  unsigned GetTableSize() const override { return table_size_; };
  private:
   unsigned table_size_;
 };
+
+
+#endif  // MODULE_DISPERSION_FUNCTION_H

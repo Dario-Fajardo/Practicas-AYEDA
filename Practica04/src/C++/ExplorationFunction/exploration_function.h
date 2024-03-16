@@ -11,11 +11,16 @@
  *        sirve para implementar una familia de clases utilizada para representar las distintas posibilidades de función 
  *        de exploración.
  */
+#ifndef EXPLORATION_FUNCTION_H
+#define EXPLORATION_FUNCTION_H
+
 #include "../DispersionFunction/dispersion_function.h"
 
 template<class Key>
 class ExplorationFunction {
  public:
   ExplorationFunction() = default;
-  virtual unsigned operator(const Key&, unsigned) const = 0;
+  virtual unsigned operator()(const Key&, unsigned) const = 0;
 };
+
+#endif  // EXPLORATION_FUNCTION_H

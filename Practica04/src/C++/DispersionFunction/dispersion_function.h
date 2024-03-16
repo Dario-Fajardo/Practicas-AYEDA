@@ -11,9 +11,15 @@
  *        sirve para implementar una familia de clases utilizada para representar las distintas posibilidades de función 
  *        de dispersión
  */
+#ifndef DISPERSION_FUNCTION_H
+#define DISPERSION_FUNCTION_H
+
 template<class Key>
 class DispersionFunction {
  public:
   DispersionFunction() = default;
-  virtual unsigned operator() (const Key&, unsigned) const = 0;
+  virtual unsigned operator() (const Key&) const = 0;
+  virtual unsigned GetTableSize() const = 0; 
 };
+
+#endif  // DISPERSION_FUNCTION_H

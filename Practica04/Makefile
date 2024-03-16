@@ -13,7 +13,7 @@ CXX = g++
 CXXFLAGS = -Wall
 BOLD_RED =\e[31m \e[1m
 ######################################
-files = src/C++/*/*cc
+files = src/C++/*/*
 ######################################
 all: programa
 
