@@ -10,6 +10,7 @@
     "random": "cpp",
     "format": "cpp",
     "system_error": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "ostream": "cpp"
   }
 }

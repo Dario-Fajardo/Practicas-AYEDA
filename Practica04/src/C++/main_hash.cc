@@ -17,30 +17,35 @@
 #include "ExplorationFunction/quadratic_exploration_function.h"
 #include "ExplorationFunction/redispersion_exploration_function.h"
 #include "ExplorationFunction/double_dispersion_exploration_function.h"
+#include "Sequence/dynamic_sequence.h"
+#include "Sequence/static_sequence.h"
 #include "Nif/nif.h"
 
 int main(int argc, char* argv[]) {
-  Nif key(79093616);
-  DispersionFunction<Nif>* pseudorandom{new PseudorandomDispersionFunction<Nif>{1000}};
-  LinealExplorationFunction<Nif> lineal;
-  QuadraticExplorationFunction<Nif> quadratic;
-  RedispersionExplorationFunction<Nif> redispersion{*pseudorandom};
-  DoubleDispersionExplorationFunction<Nif> double_dispersion{*pseudorandom};
-  std::cout << "Lineal: \n";
-  for (unsigned i{1}; i < 11; ++i) {
-    std::cout << lineal(key, i) << std::endl;
-  }
-  std::cout << "Quadratic: \n";
-  for (unsigned i{1}; i < 11; ++i) {
-    std::cout << quadratic(key, i) << std::endl;
-  }
-  std::cout << "Redispersion: \n";
-  for (unsigned i{1}; i < 11; ++i) {
-    std::cout << redispersion(key, i) << std::endl;
-  }
-  std::cout << "Double dispersion: \n";
-  for (unsigned i{1}; i < 11; ++i) {
-    std::cout << double_dispersion(key, i) << std::endl;
-  }
+  // Prueba de las clases sequence
+  std::cout << "Prueba de la secuencia dinamica" << std::endl;
+  DynamicSequence<int> dynamic_sequence;
+  dynamic_sequence.Insert(1);
+  dynamic_sequence.Insert(2);
+  dynamic_sequence.Insert(3);
+  dynamic_sequence.Insert(4);
+  dynamic_sequence.Insert(5);
+  dynamic_sequence.Insert(6);
+  dynamic_sequence.Insert(7);
+  dynamic_sequence.Insert(8);
+  std::cout << "Se inserto el 6? " << dynamic_sequence.Insert(6) << std::endl; 
+  std::cout << "Esta el 1? " << dynamic_sequence.Search(1) << std::endl;
+  std::cout << "Esta el 6? " << dynamic_sequence.Search(6) << std::endl;
+
+  std::cout << "Prueba de la secuencia estatica" << std::endl;
+  StaticSequence<int> static_sequence{5};
+  static_sequence.Insert(1);
+  static_sequence.Insert(2);
+  static_sequence.Insert(3);
+  static_sequence.Insert(4);
+  static_sequence.Insert(5);
+  std::cout << "Se inserto el 6? " << static_sequence.Insert(6) << std::endl;
+  std::cout << "Esta el 1? " << static_sequence.Search(1) << std::endl;
+  std::cout << "Esta el 6? " << static_sequence.Search(6) << std::endl;
   return 0;
 }
