@@ -18,14 +18,22 @@
 template<class Key>
 class StaticSequence : public Sequence<Key> {
  public:
-  StaticSequence(const size_t block_size) : block_size_(block_size) { block_ = new Key[block_size]; } 
+  StaticSequence(const unsigned block_size); 
   bool Search(const Key&) const override;
   bool Insert(const Key&) override;
   bool IsFull() const;
  private:
   Key* block_;
-  size_t block_size_;
+  unsigned block_size_;
 };
+
+template<class Key>
+StaticSequence<Key>::StaticSequence(const unsigned block_size) : block_size_{block_size} {
+  block_ = new Key[block_size_];
+  for (size_t i = 0; i < block_size_; ++i) {
+    block_[i] = 0;
+  }
+}
 
 template<class Key>
 bool StaticSequence<Key>::Search(const Key& key) const {
