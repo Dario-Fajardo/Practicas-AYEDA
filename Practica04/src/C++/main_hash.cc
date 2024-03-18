@@ -23,52 +23,132 @@
 #include "Nif/nif.h"
 
 int main(int argc, char* argv[]) {
-  PseudorandomDispersionFunction<Nif> pseudorandom_dispersion_function{10};
-  QuadraticExplorationFunction<Nif> quadratic_exploration_function{};
-  HashTable<Nif, DynamicSequence<Nif>> hash_table{10, pseudorandom_dispersion_function};
-  Nif nif1{79093616};
-  Nif nif2{79093617};
-  Nif nif3{79093618};
-  Nif nif4{79093619};
-  Nif nif5{79093620};
-  Nif nif6{79093621};
-  Nif nif7{79093622};
-  Nif nif8{79093623};
-  Nif nif9{79093624};
-  Nif nif10{79093625};
-  Nif nif11{79093626};
-  Nif nif12{79093627};
-  Nif nif13{79093628};
-  Nif nif14{79093629};
-
-  std::cout << "Inserting nif1: " << hash_table.Insert(nif1) << std::endl;
-  std::cout << "Inserting nif2: " << hash_table.Insert(nif2) << std::endl;
-  std::cout << "Inserting nif3: " << hash_table.Insert(nif3) << std::endl;
-  std::cout << "Inserting nif4: " << hash_table.Insert(nif4) << std::endl;
-  std::cout << "Inserting nif5: " << hash_table.Insert(nif5) << std::endl;
-  std::cout << "Inserting nif6: " << hash_table.Insert(nif6) << std::endl;
-  std::cout << "Inserting nif7: " << hash_table.Insert(nif7) << std::endl;
-  std::cout << "Inserting nif7: " << hash_table.Insert(nif7) << std::endl;
-  std::cout << "Inserting nif8: " << hash_table.Insert(nif8) << std::endl;
-  std::cout << "Inserting nif9: " << hash_table.Insert(nif9) << std::endl;
-  std::cout << "Inserting nif10: " << hash_table.Insert(nif10) << std::endl;
-  std::cout << "Inserting nif11: " << hash_table.Insert(nif11) << std::endl;
-  std::cout << "Inserting nif12: " << hash_table.Insert(nif12) << std::endl;
-  std::cout << "Inserting nif13: " << hash_table.Insert(nif13) << std::endl;
-  std::cout << "Inserting nif14: " << hash_table.Insert(nif14) << std::endl;
-
-  std::cout << "Searching nif1: " << hash_table.Search(nif1) << std::endl;
-  std::cout << "Searching nif2: " << hash_table.Search(nif2) << std::endl;
-  std::cout << "Searching nif3: " << hash_table.Search(nif3) << std::endl;
-  std::cout << "Searching nif4: " << hash_table.Search(nif4) << std::endl;
-  std::cout << "Searching nif5: " << hash_table.Search(nif5) << std::endl;
-  std::cout << "Searching nif6: " << hash_table.Search(nif6) << std::endl;
-  std::cout << "Searching nif7: " << hash_table.Search(nif7) << std::endl;
-  std::cout << "Searching nif8: " << hash_table.Search(nif8) << std::endl;
-  std::cout << "Searching nif9: " << hash_table.Search(nif9) << std::endl;
-  std::cout << "Searching nif10: " << hash_table.Search(nif10) << std::endl;
-  std::cout << "Searching nif11: " << hash_table.Search(nif11) << std::endl;
-  std::cout << "Searching nif12: " << hash_table.Search(nif12) << std::endl;
-  std::cout << "Searching nif13: " << hash_table.Search(nif13) << std::endl;
-  std::cout << "Searching nif14: " << hash_table.Search(nif14) << std::endl;
+  DispersionFunction<Nif>* dispersion_function;
+  ExplorationFunction<Nif>* exploration_function;
+  std::cout << "Práctica 4: Búsqueda por dispersión\n";
+  std::cout << "------------------------------------\n";
+  std::cout << "Introduzca el tamaño de la tabla hash: \n";
+  unsigned table_size;
+  std::cin >> table_size;
+  std::cout << "Introduzca el tipo de función de dispersión\n";
+  std::cout << "[1] Función de dispersión basada en módulo\n";
+  std::cout << "[2] Función de dispersión pseudoaleatoria\n";
+  std::cout << "[3] Función de dispersión basada en la suma\n";
+  int dispersion_function_type;
+  std::cin >> dispersion_function_type;
+  switch (dispersion_function_type) {
+    case 1:
+      dispersion_function = new ModuleDispersionFunction<Nif>(table_size);
+      break;
+    case 2:
+      dispersion_function = new PseudorandomDispersionFunction<Nif>(table_size);
+      break;
+    case 3:
+      dispersion_function = new SumBasedDispersionFunction<Nif>(table_size);
+      break;
+  }
+  std::cout << "Utilizaremos dispersión abierta o cerrada?\n";
+  std::cout << "[1] Dispersión cerrada\n";
+  std::cout << "[2] Dispersión abierta\n";
+  int dispersion_type;
+  std::cin >> dispersion_type;
+  if (dispersion_type == 1) {
+    std::cout << "Introduzca el tipo de función de exploración\n";
+    std::cout << "[1] Exploración lineal\n";
+    std::cout << "[2] Exploración cuadrática\n";
+    std::cout << "[3] Redispersión\n";
+    std::cout << "[4] Doble dispersión\n";
+    int exploration_function_type;
+    std::cin >> exploration_function_type;
+    switch (exploration_function_type) {
+      case 1:
+        exploration_function = new LinealExplorationFunction<Nif>;
+        break;
+      case 2:
+        exploration_function = new QuadraticExplorationFunction<Nif>;
+        break;
+      case 3:
+        exploration_function = new RedispersionExplorationFunction<Nif>(*dispersion_function);
+        break;
+      case 4:
+        exploration_function = new DoubleDispersionExplorationFunction<Nif>(*dispersion_function);
+        break;
+    }
+    std::cout << "Introduzca el tamaño de bloque\n";
+    unsigned block_size;
+    std::cin >> block_size;
+    HashTable<Nif, StaticSequence<Nif>> hash_table{table_size, block_size, *dispersion_function, *exploration_function};
+    std::string option_menu{"\nMenú de opciones:\n [1] Insertar\n [2] Buscar\n [4] Salir\n"};
+    std::cout << option_menu;
+    int option;
+    std::cin >> option;
+    while (option != 4) {
+      switch (option) {
+        case 1: {
+          system("clear");
+          std::cout << "Introduzca el NIF a insertar\n";
+          unsigned nif;
+          std::cin >> nif;
+          Nif nif_object{nif};
+          if (hash_table.Insert(nif_object))
+            std::cout << "NIF " << nif << " insertado correctamente\n";
+          else
+            std::cout << "No se ha podido insertar el NIF\n";
+          break;
+        }
+        case 2: {
+          system("clear");
+          std::cout << "Introduzca el NIF a buscar\n";
+          unsigned nif_to_search;
+          std::cin >> nif_to_search;
+          Nif nif_object_to_search{nif_to_search};
+          if (hash_table.Search(nif_object_to_search))
+            std::cout << "NIF " << nif_to_search << " encontrado\n";
+          else
+            std::cout << "NIF no encontrado\n";
+          break;
+        }
+      }
+      std::cout << option_menu;
+      std::cin >> option;
+      system("clear");
+    }
+  } else {
+    HashTable<Nif, DynamicSequence<Nif>> hash_table{table_size, *dispersion_function};
+    std::string option_menu{"\nMenú de opciones:\n [1] Insertar\n [2] Buscar\n [4] Salir\n"};
+    std::cout << option_menu;
+    int option;
+    std::cin >> option;
+    while (option != 4) {
+      switch (option) {
+        case 1: {
+          system("clear");
+          std::cout << "Introduzca el NIF a insertar\n";
+          unsigned nif;
+          std::cin >> nif;
+          Nif nif_object{nif};
+          if (hash_table.Insert(nif_object))
+            std::cout << "NIF " << nif << " insertado correctamente\n";
+          else
+            std::cout << "No se ha podido insertar el NIF\n";
+          break;
+        }
+        case 2: {
+          system("clear");
+          std::cout << "Introduzca el NIF a buscar\n";
+          unsigned nif_to_search;
+          std::cin >> nif_to_search;
+          Nif nif_object_to_search{nif_to_search};
+          if (hash_table.Search(nif_object_to_search))
+            std::cout << "NIF " << nif_to_search << " encontrado\n";
+          else
+            std::cout << "NIF no encontrado\n";
+          break;
+        }
+      }
+      std::cout << option_menu;
+      std::cin >> option;
+      system("clear");
+    }
+  }
 }
