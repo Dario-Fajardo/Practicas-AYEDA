@@ -7,7 +7,7 @@
  *
  * @author Dario Fajardo alu0101564630@ull.edu.es
  * @date 13 Mar 2024
- * @brief En este archivo se encuentra la función main del programa.
+ * @brief En este archivo se encuentra la definición de la clase Nif, usada como Key en una tabla Hash.
  */
 #include<cstdlib>
 #include<ctime>
