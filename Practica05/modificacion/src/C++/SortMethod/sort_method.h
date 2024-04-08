@@ -21,6 +21,8 @@ class SortMethod {
  public:
   SortMethod(StaticSequence<Key> sequence) : sequence_{sequence} {}
   virtual void Sort(void) = 0;
+  int GetComparisons(void) const { return comparisons_; }
+  int GetSwaps(void) const { return swaps_; }
  protected:
   StaticSequence<Key> sequence_;
   int comparisons_ = 0;
