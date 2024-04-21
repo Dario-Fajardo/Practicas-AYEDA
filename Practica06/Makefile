@@ -21,12 +21,12 @@ programa: $(files)
 	@echo -e "$(BOLD_RED)======================================================"
 	@echo -e "$(BOLD_RED)chambeando..."
 	@echo -e "$(BOLD_RED)======================================================"
-	@$(CXX) $(CXXFLAGS) -o bin/sort $(files) src/C++/*cc
+	@$(CXX) $(CXXFLAGS) -o bin/tda $(files) src/C++/*cc
 
 ######################################
 .PHONY: clean
 ######################################
 clean:
 	@echo "cleaning up the directory..."
-	@rm bin/sort
+	@rm bin/tda
 ######################################
