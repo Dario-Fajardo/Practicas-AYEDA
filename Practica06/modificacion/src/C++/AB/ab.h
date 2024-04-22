@@ -28,6 +28,7 @@ class AB {
   virtual bool Search(const Key& key) = 0;
 
   void InOrder(const NodoB<Key>* node);
+  void Print();
 
  protected:
   NodoB<Key>* root_;

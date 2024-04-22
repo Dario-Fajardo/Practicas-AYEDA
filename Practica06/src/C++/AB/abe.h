@@ -16,58 +16,55 @@
 
 template<class Key>
 class ABE : public AB<Key> {
- public:
-  ABE() : AB<Key>() {};
-  ABE(NodoB<Key>* root) : AB<Key>(root) {};
+  public:
+    ABE() : AB<Key>() {};
+    bool Insert(const Key&) override;
+    bool Search(const Key&) override;
 
-  bool Insert(const Key& key) override;
-  bool Search(const Key& key) override;
+  private:
+    bool Insert(const Key&, NodoB<Key>* node);
+    bool Search(const Key&, const NodoB<Key>*);
 };
 
 template<class Key>
 bool ABE<Key>::Insert(const Key& key) {
-  NodoB<Key>* new_node = new NodoB<Key>(key);
-  if (AB<Key>::GetRoot() == nullptr) {
-    AB<Key>::SetRoot(new_node);
-    return true;
+  if (this -> getRoot() == nullptr) {
+    NodoB<Key>* newNodoB= new NodoB<Key> {key};
+    return this -> setRoot(newNodoB);
   }
-
-  NodoB<Key>* current = AB<Key>::GetRoot();
-  NodoB<Key>* parent = nullptr;
-
-  while (current != nullptr) {
-    parent = current;
-    if (long(key) < long(current->GetKey())) {
-      current = current->GetLeft();
-    } else if (long(key) > long(current->GetKey())) {
-      current = current->GetRight();
-    } else {
-      return false;
-    }
-  }
-
-  if (key < parent->GetKey()) {
-    parent->SetLeft(new_node);
-  } else {
-    parent->SetRight(new_node);
-  }
-
-  return true;
+  return Insert(key, this -> getRoot());
 }
 
 template<class Key>
 bool ABE<Key>::Search(const Key& key) {
-  NodoB<Key>* current = AB<Key>::GetRoot();
-  while (current != nullptr) {
-    if (long(key) < long(current->GetKey())) {
-      current = current->GetLeft();
-    } else if (long(key) > long(current->GetKey())) {
-      current = current->GetRight();
-    } else {
+  return Search(key, this -> getRoot());
+}
+
+template<class Key>
+bool ABE<Key>::Insert(const Key& key, NodoB<Key>* node) {
+  if ( this -> Size(node -> getLeft()) <= this -> Size(node -> getRight())){
+    if (node -> getLeft() == nullptr) {
+      NodoB<Key>* newNodoB= new NodoB<Key> {key};
+      node->setLeft(newNodoB);
       return true;
     }
+    Insert(key, node -> getLeft());
+  } else {
+    if (node -> getRight() == nullptr) {
+      NodoB<Key>* newNodoB= new NodoB<Key> {key};
+      node -> setRight(newNodoB);
+      return true;
+    }
+    Insert(key, node -> getRight());
   }
   return false;
+}
+
+template<class Key>
+bool ABE<Key>::Search(const Key& key, const NodoB<Key>* node) {
+  if (node == nullptr) return false;
+  if (node -> getData() == key) return true;
+  return (Search(key, node->getLeft()) || Search(key, node->getRight()));
 }
 
 #endif // ABE_H
