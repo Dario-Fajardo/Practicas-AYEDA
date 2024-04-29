@@ -69,21 +69,7 @@ Personaje::operator long() const {
 }
 
 std::ostream& operator<<(std::ostream& os, Personaje player) {
-  os << "Nombre: " << player.GetNombre() << std::endl;
-  os << "Clase: " << player.GetClase() << std::endl;
-  os << "Raza: " << player.GetRaza() << std::endl;
-  os << "Alineamiento: " << player.GetAlineamiento() << std::endl;
-  os << "Nivel: " << player.GetNivel() << std::endl;
-  os << "Puntos de vida: " << player.GetPuntosDeVida() << std::endl;
-  os << "Fuerza: " << player.GetFuerza() << std::endl;
-  os << "Destreza: " << player.GetDestreza() << std::endl;
-  os << "Constitución: " << player.GetConstitucion() << std::endl;
-  os << "Inteligencia: " << player.GetInteligencia() << std::endl;
-  os << "Sabiduría: " << player.GetSabiduria() << std::endl;
-  os << "Carisma: " << player.GetCarisma() << std::endl;
-  os << "Armadura: " << player.GetArmadura() << std::endl;
-  os << "Iniciativa: " << player.GetIniciativa() << std::endl;
-  os << "Velocidad: " << player.GetVelocidad() << std::endl;
+  os << player.GetNombre();
   return os;
 }
 
